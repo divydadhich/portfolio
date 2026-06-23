@@ -30,7 +30,7 @@ const EXPERIENCE = [
     period: "Nov 2025 – Present", 
     type: "Full-time", 
     location: "Jaipur, IN", 
-    color: "#10b981", // emerald
+    color: "#8b5cf6", // violet
     bullets: [ 
       "Built XOTO Grid (real-estate marketplace) and XOTO Vault (partner platform) for live business clients using the full MERN stack.", 
       "Architected RBAC systems spanning 7+ user personas — Admin, Agent, Advisor, Agency, Developer, Referral Partner, Customer — with fine-grained permission control.", 
@@ -44,7 +44,7 @@ const EXPERIENCE = [
     period: "Mar 2025 – Sep 2025", 
     type: "Internship", 
     location: "Jaipur, IN", 
-    color: "#06b6d4", // cyan
+    color: "#ec4899", // rose
     bullets: [ 
       "Built full-stack MERN applications with RESTful APIs, JWT auth, and role-based authorization.", 
       "Integrated React frontends with Express/Node backends; optimized MongoDB queries and schema design for performance.", 
@@ -57,7 +57,7 @@ const EXPERIENCE = [
     period: "May 2023 – Jul 2023", 
     type: "Internship", 
     location: "Jaipur, IN", 
-    color: "#6366f1", // indigo
+    color: "#06b6d4", // cyan
     bullets: [ 
       "Designed and built responsive client websites using HTML, CSS, and JavaScript.", 
       "Collaborated on UI/UX improvements and adopted professional workflows and design critique cycles." 
@@ -249,7 +249,7 @@ function ParticleBackground() {
         
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(16,185,129,${p.opacity})`; // emerald particles
+        ctx.fillStyle = `rgba(139,92,246,${p.opacity})`; // violet particles
         ctx.fill();
       });
       
@@ -261,7 +261,7 @@ function ParticleBackground() {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y); 
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(16,185,129,${0.08 * (1 - d / 110)})`;
+            ctx.strokeStyle = `rgba(139,92,246,${0.08 * (1 - d / 110)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -394,10 +394,10 @@ function Navbar({ scrollProgress }) {
     <>
       <div className="progress-bar" style={{ width: scrollProgress + "%" }} />
       <nav className={`fixed top-0 left-0 right-0 z-[90] px-6 md:px-12 flex items-center justify-between h-[72px] transition-all duration-400 ${
-        scrolled ? "bg-slate-950/85 backdrop-blur-md border-b border-slate-900 shadow-lg" : "bg-transparent"
+        scrolled ? "bg-slate-950/85 backdrop-blur-md border-b border-slate-900/60 shadow-lg shadow-violet-500/[0.01]" : "bg-transparent"
       }`}>
         <div className="font-display font-extrabold text-2xl tracking-tight text-white select-none">
-          <span className="text-emerald-500">D</span>ivy<span className="text-emerald-500">.</span>
+          <span className="bg-gradient-to-r from-violet-400 to-rose-400 bg-clip-text text-transparent">D</span>ivy<span className="text-rose-500">.</span>
         </div>
         
         {/* Desktop Links */}
@@ -406,7 +406,7 @@ function Navbar({ scrollProgress }) {
             <li key={link}>
               <button 
                 className={`nav-link text-[13px] font-medium tracking-wide uppercase transition-colors duration-200 ${
-                  active === link.toLowerCase() ? "text-emerald-400 active" : "text-slate-400 hover:text-white"
+                  active === link.toLowerCase() ? "text-violet-400 active" : "text-slate-400 hover:text-white"
                 }`} 
                 onClick={() => scrollTo(link)}
               >
@@ -420,7 +420,7 @@ function Navbar({ scrollProgress }) {
         <div className="hidden md:block">
           <a 
             href="mailto:divydadhich1234@gmail.com?subject=Let's%20work%20together" 
-            className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 font-display font-bold text-xs uppercase px-5 py-2.5 rounded-full tracking-wider transition-all duration-300 hover:border-emerald-500"
+            className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 text-violet-400 hover:bg-gradient-to-r hover:from-violet-600 hover:to-rose-600 hover:text-white font-display font-bold text-xs uppercase px-5 py-2.5 rounded-full tracking-wider transition-all duration-300 hover:border-violet-500 shadow-sm hover:shadow-violet-500/20"
           >
             Hire Me →
           </a>
@@ -429,7 +429,7 @@ function Navbar({ scrollProgress }) {
         {/* Mobile Toggle */}
         <button 
           onClick={() => setMenuOpen(!menuOpen)} 
-          className="md:hidden flex items-center justify-center border border-slate-800 hover:border-emerald-500/50 bg-slate-950/50 rounded-lg p-2 text-slate-300 transition-colors duration-200"
+          className="md:hidden flex items-center justify-center border border-slate-800 hover:border-violet-500/50 bg-slate-950/50 rounded-lg p-2 text-slate-300 transition-colors duration-200"
         >
           {menuOpen ? (
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
@@ -446,14 +446,14 @@ function Navbar({ scrollProgress }) {
             <button 
               key={link} 
               onClick={() => scrollTo(link)} 
-              className="text-left font-display font-bold text-lg text-slate-200 hover:text-emerald-400 py-1 transition-colors duration-200"
+              className="text-left font-display font-bold text-lg text-slate-200 hover:text-violet-400 py-1 transition-colors duration-200"
             >
               {link}
             </button>
           ))}
           <a 
             href="mailto:divydadhich1234@gmail.com?subject=Let's%20work%20together" 
-            className="bg-emerald-500 text-slate-950 text-center font-display font-bold py-3.5 rounded-xl text-sm transition-all hover:bg-emerald-400 mt-2"
+            className="bg-gradient-to-r from-violet-600 to-rose-600 text-white text-center font-display font-bold py-3.5 rounded-xl text-sm transition-all hover:opacity-90 mt-2 shadow-lg shadow-violet-500/10"
           >
             Hire Me →
           </a>
@@ -498,30 +498,30 @@ function Hero() {
     <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-slate-950 pt-[72px] px-6 md:px-12">
       <ParticleBackground />
       {/* Background patterns */}
-      <div className="absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(rgba(16,185,129,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+      <div className="absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(rgba(139,92,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
       
       <div className="max-w-6xl mx-auto py-16 relative z-10 w-full">
         <div className="max-w-3xl">
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-1.5 mb-8 animate-fadeIn">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] text-emerald-300 font-mono tracking-widest uppercase">Available for Full-time & Freelance</span>
+          <div className="inline-flex items-center gap-2.5 bg-violet-500/10 border border-violet-500/20 rounded-full px-4 py-1.5 mb-8 animate-fadeIn">
+            <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+            <span className="text-[11px] text-violet-300 font-mono tracking-widest uppercase">Available for Full-time & Freelance</span>
           </div>
 
           {/* Heading */}
           <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight leading-[0.9] text-white mb-6">
             Divy<br />
-            <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-rose-400 bg-clip-text text-transparent">
               Dadhich
             </span>
           </h1>
 
           {/* Subheading typewriter */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-[2px] bg-emerald-500 rounded" />
+            <div className="w-8 h-[2px] bg-violet-500 rounded" />
             <span className="text-xl md:text-2xl text-slate-400 font-light tracking-wide">
               {typed}
-              <span className="animate-pulse text-emerald-400 font-bold ml-1">|</span>
+              <span className="animate-pulse text-violet-400 font-bold ml-1">|</span>
             </span>
           </div>
 
@@ -537,7 +537,7 @@ function Hero() {
                 const el = document.getElementById("projects");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }} 
-              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-display font-extrabold text-sm uppercase px-8 py-4 rounded-full shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-violet-600 to-rose-600 text-white font-display font-extrabold text-sm uppercase px-8 py-4 rounded-full shadow-lg shadow-violet-500/20 hover:shadow-rose-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
             >
               View Projects 
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -555,13 +555,13 @@ function Hero() {
           <div className="flex flex-wrap gap-3 mb-12">
             <button 
               onClick={handleCopyInfo} 
-              className="inline-flex items-center gap-2 bg-slate-900/50 border border-slate-800/80 hover:border-emerald-500/30 text-slate-400 hover:text-emerald-400 font-display font-semibold text-[11px] uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-slate-900/50 border border-slate-800/80 hover:border-violet-500/30 text-slate-400 hover:text-violet-400 font-display font-semibold text-[11px] uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-200"
             >
               📋 Copy Info
             </button>
             <button 
               onClick={handleDownloadVCard} 
-              className="inline-flex items-center gap-2 bg-slate-900/50 border border-slate-800/80 hover:border-emerald-500/30 text-slate-400 hover:text-emerald-400 font-display font-semibold text-[11px] uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-slate-900/50 border border-slate-800/80 hover:border-violet-500/30 text-slate-400 hover:text-violet-400 font-display font-semibold text-[11px] uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-200"
             >
               💾 Save Contact (vCard)
             </button>
@@ -576,7 +576,7 @@ function Hero() {
               ["3", "Companies"]
             ].map(([number, label]) => (
               <div key={label} className="group">
-                <div className="text-3xl md:text-4xl font-display font-black text-white group-hover:text-emerald-400 transition-colors duration-300">{number}</div>
+                <div className="text-3xl md:text-4xl font-display font-black text-white group-hover:text-violet-400 transition-colors duration-300">{number}</div>
                 <div className="text-[10px] text-slate-500 group-hover:text-slate-400 font-mono tracking-widest uppercase mt-1">{label}</div>
               </div>
             ))}
@@ -586,7 +586,7 @@ function Hero() {
         {/* Scroll down indicator */}
         <div className="absolute bottom-0 right-0 hidden sm:flex flex-col items-center gap-2.5 animate-fadeIn">
           <span className="text-[9px] text-slate-600 tracking-[0.25em] uppercase font-mono [writing-mode:vertical-rl]">Scroll down</span>
-          <div className="w-[1px] h-12 bg-gradient-to-b from-emerald-500 to-transparent" />
+          <div className="w-[1px] h-12 bg-gradient-to-b from-violet-500 to-transparent" />
         </div>
       </div>
     </section>
@@ -601,7 +601,7 @@ function Ticker() {
         {[...TOOLS, ...TOOLS].map((tool, idx) => (
           <span key={idx} className="text-xs text-slate-500 font-mono tracking-wider whitespace-nowrap flex items-center gap-4">
             {tool}
-            <span className="text-emerald-500/60 text-[8px]">◆</span>
+            <span className="text-violet-500/60 text-[8px]">◆</span>
           </span>
         ))}
       </div>
@@ -631,15 +631,15 @@ function About() {
             {/* Code syntax */}
             <div className="flex-1 p-8 font-mono text-[11px] leading-relaxed text-slate-500 select-none overflow-hidden">
               {["const Divy = {", '  role: "Full Stack Dev",', '  stack: ["MERN"],', '  location: "Jaipur, IN",', '  status: "Available",', '  experience: "1+ yrs",', "};", "", "export default Divy;"].map((line, i) => (
-                <div key={i} className={i === 0 || i === 6 || i === 8 ? "text-emerald-500/80" : "pl-4 text-slate-500"}>{line}</div>
+                <div key={i} className={i === 0 || i === 6 || i === 8 ? "text-violet-400/80" : "pl-4 text-slate-500"}>{line}</div>
               ))}
             </div>
 
             {/* Profile Overlay */}
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/70 backdrop-blur-[1px] p-6">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20 border-2 border-emerald-500/30 flex items-center justify-center mb-4 relative">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-violet-500/20 to-rose-500/20 border-2 border-violet-500/30 flex items-center justify-center mb-4 relative">
                 <div className="absolute inset-1.5 rounded-full bg-slate-950 flex items-center justify-center">
-                  <span className="font-display font-extrabold text-2xl text-emerald-400">DD</span>
+                  <span className="font-display font-extrabold text-2xl text-violet-400">DD</span>
                 </div>
               </div>
               <h3 className="font-display font-extrabold text-lg text-white">Divy Dadhich</h3>
@@ -647,7 +647,7 @@ function About() {
             </div>
 
             {/* Floating Tags */}
-            <div className="absolute top-8 right-6 bg-slate-900 border border-slate-800/80 rounded-xl px-4 py-2 text-[11px] text-emerald-400 font-display font-extrabold shadow-lg">
+            <div className="absolute top-8 right-6 bg-slate-900 border border-slate-800/80 rounded-xl px-4 py-2 text-[11px] text-violet-400 font-display font-extrabold shadow-lg">
               🟢 Open to Work
             </div>
             <div className="absolute bottom-8 left-6 bg-slate-900 border border-slate-800/80 rounded-xl px-4 py-2 text-[11px] text-slate-300 font-mono shadow-lg">
@@ -656,8 +656,8 @@ function About() {
           </div>
 
           {/* Metrics Float */}
-          <div className="absolute -bottom-6 -right-4 bg-slate-900 border border-emerald-500/10 rounded-2xl p-5 text-center shadow-2xl min-w-[120px]">
-            <div className="font-display font-black text-3xl text-emerald-400 leading-none">{projectCount}+</div>
+          <div className="absolute -bottom-6 -right-4 bg-slate-900 border border-violet-500/10 rounded-2xl p-5 text-center shadow-2xl min-w-[120px]">
+            <div className="font-display font-black text-3xl text-violet-400 leading-none">{projectCount}+</div>
             <div className="text-[9px] text-slate-500 tracking-wider font-mono uppercase mt-1">Projects</div>
           </div>
         </div>
@@ -665,11 +665,11 @@ function About() {
         {/* Text Area */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span className="text-xs text-emerald-400 font-mono tracking-widest uppercase">About Me</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+            <span className="text-xs text-violet-400 font-mono tracking-widest uppercase">About Me</span>
           </div>
           <h2 className="font-display font-black text-4xl md:text-5xl tracking-tight leading-[1.05] text-white mb-6">
-            I engineer products that <span className="text-emerald-400">actually ship.</span>
+            I engineer products that <span className="bg-gradient-to-r from-violet-400 to-rose-400 bg-clip-text text-transparent font-extrabold">actually ship.</span>
           </h2>
           <p className="text-slate-400 leading-relaxed text-sm md:text-base mb-5 font-light">
             I'm a Full Stack Developer from Jaipur, India. Currently, I build production-grade MERN platforms at Kotibox Global Technologies. My experience spans live marketplace systems, partner pipeline hubs, and role-specific dashboards.
@@ -704,7 +704,7 @@ function About() {
                 href={href} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="bg-slate-900 border border-slate-800 text-slate-400 hover:text-emerald-400 hover:border-emerald-500/30 font-display font-semibold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-200"
+                className="bg-slate-900 border border-slate-800 text-slate-400 hover:text-violet-400 hover:border-violet-500/30 font-display font-semibold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-200"
               >
                 {name}
               </a>
