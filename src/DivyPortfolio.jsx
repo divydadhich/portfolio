@@ -30,7 +30,7 @@ const EXPERIENCE = [
     period: "Nov 2025 – Present", 
     type: "Full-time", 
     location: "Jaipur, IN", 
-    color: "#8b5cf6", // violet
+    color: "#8b5cf6",
     bullets: [ 
       "Built XOTO Grid (real-estate marketplace) and XOTO Vault (partner platform) for live business clients using the full MERN stack.", 
       "Architected RBAC systems spanning 7+ user personas — Admin, Agent, Advisor, Agency, Developer, Referral Partner, Customer — with fine-grained permission control.", 
@@ -44,7 +44,7 @@ const EXPERIENCE = [
     period: "Mar 2025 – Sep 2025", 
     type: "Internship", 
     location: "Jaipur, IN", 
-    color: "#ec4899", // rose
+    color: "#ec4899",
     bullets: [ 
       "Built full-stack MERN applications with RESTful APIs, JWT auth, and role-based authorization.", 
       "Integrated React frontends with Express/Node backends; optimized MongoDB queries and schema design for performance.", 
@@ -57,7 +57,7 @@ const EXPERIENCE = [
     period: "May 2023 – Jul 2023", 
     type: "Internship", 
     location: "Jaipur, IN", 
-    color: "#06b6d4", // cyan
+    color: "#06b6d4",
     bullets: [ 
       "Designed and built responsive client websites using HTML, CSS, and JavaScript.", 
       "Collaborated on UI/UX improvements and adopted professional workflows and design critique cycles." 
@@ -65,12 +65,38 @@ const EXPERIENCE = [
   },
 ];
 
-const PROJECTS = [
-  { name: "XOTO Grid", tagline: "Real-Estate Marketplace", description: "A large-scale real-estate platform with 7 role-specific dashboards, intelligent lead management with auto-classification, deduplication, and performance-based advisor assignment.", stack: ["React.js", "Node.js", "MongoDB", "Redux", "Socket.io", "AWS S3", "Express.js"], accent: "#10b981", metrics: ["7 User Roles", "Live Clients", "Real-time Updates"], featured: true },
-  { name: "XOTO Vault", tagline: "Partner Ecosystem Platform", description: "Multi-step partner onboarding with KYC (Emirates ID, Passport, Trade License), structured lead pipelines, and automated commission tracking with Pending→Confirmed→Paid flow.", stack: ["React.js", "Node.js", "MongoDB", "Ant Design", "AWS S3"], accent: "#06b6d4", metrics: ["KYC Workflows", "Commission Engine", "Deal Verification"], featured: true },
-  { name: "XOTO.ae", tagline: "Corporate Website", description: "Full UI/UX design and development for an official UAE real-estate brand — responsive, brand-aligned, and refined through multiple stakeholder feedback cycles.", stack: ["React.js", "Tailwind CSS", "JavaScript"], accent: "#6366f1", metrics: ["UAE Market", "Responsive", "Stakeholder Approved"], featured: false },
-  { name: "Taazi Bhaazi", tagline: "Quick Commerce Platform", description: "A quick-commerce MERN platform bridging local produce sellers with nearby buyers — real-time product listings, live inventory, and delivery tracking.", stack: ["React.js", "Node.js", "Express.js", "MongoDB"], accent: "#f59e0b", metrics: ["Real-time Listings", "Delivery Tracking", "Seller Dashboard"], featured: false },
-  { name: "Compostify", tagline: "Waste Management System", description: "Team-based food waste management platform routing donations to NGOs and organic waste to compost agencies — full MERN contribution on both frontend and backend.", stack: ["React.js", "Node.js", "Express.js", "MongoDB"], accent: "#14b8a6", metrics: ["NGO Integration", "Waste Routing", "Team Platform"], featured: false },
+// XOTO.ae is the main platform; Grid and Vault are its sub-modules
+const XOTO_PROJECT = {
+  name: "XOTO.ae",
+  tagline: "UAE Real-Estate Platform",
+  href: "https://xoto.ae/",
+  description: "Full UI/UX design and development for an official UAE real-estate brand — responsive, brand-aligned, and refined through multiple stakeholder feedback cycles.",
+  stack: ["React.js", "Tailwind CSS", "JavaScript"],
+  accent: "#10b981",
+  metrics: ["UAE Market", "Responsive", "Stakeholder Approved"],
+  modules: [
+    {
+      name: "XOTO Grid",
+      tagline: "Real-Estate Marketplace",
+      description: "7 role-specific dashboards, intelligent lead management with auto-classification, deduplication, and performance-based advisor assignment.",
+      stack: ["React.js", "Node.js", "MongoDB", "Redux", "Socket.io", "AWS S3", "Express.js"],
+      accent: "#10b981",
+      metrics: ["7 User Roles", "Live Clients", "Real-time Updates"],
+    },
+    {
+      name: "XOTO Vault",
+      tagline: "Partner Ecosystem Platform",
+      description: "Multi-step partner onboarding with KYC (Emirates ID, Passport, Trade License), structured lead pipelines, and commission tracking with Pending→Confirmed→Paid flow.",
+      stack: ["React.js", "Node.js", "MongoDB", "Ant Design", "AWS S3"],
+      accent: "#06b6d4",
+      metrics: ["KYC Workflows", "Commission Engine", "Deal Verification"],
+    },
+  ],
+};
+
+const OTHER_PROJECTS = [
+  { name: "Taazi Bhaaji", tagline: "Quick Commerce Platform", description: "A quick-commerce MERN platform bridging local produce sellers with nearby buyers — real-time product listings, live inventory, and delivery tracking.", stack: ["React.js", "Node.js", "Express.js", "MongoDB"], accent: "#f59e0b", metrics: ["Real-time Listings", "Delivery Tracking", "Seller Dashboard"] },
+  { name: "Compostify", tagline: "Waste Management System", description: "Team-based food waste management platform routing donations to NGOs and organic waste to compost agencies — full MERN contribution on both frontend and backend.", stack: ["React.js", "Node.js", "Express.js", "MongoDB"], accent: "#14b8a6", metrics: ["NGO Integration", "Waste Routing", "Team Platform"] },
 ];
 
 const SERVICES = [
@@ -249,7 +275,7 @@ function ParticleBackground() {
         
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139,92,246,${p.opacity})`; // violet particles
+        ctx.fillStyle = `rgba(139,92,246,${p.opacity})`;
         ctx.fill();
       });
       
@@ -333,16 +359,12 @@ Web Designer Trainee | Seldom India (May 2023 – Jul 2023 | Jaipur, IN)
 ────────────────────────────────────────
 PROJECTS
 ────────────────────────────────────────
-XOTO Grid (Real‑Estate Marketplace)
-• 7 role-specific dashboards, intelligent lead management, real-time updates.
-Stack: React.js, Node.js, MongoDB, Redux, Socket.io, AWS S3, Express.js
-
-XOTO Vault (Partner Ecosystem Platform)
-• Multi-step KYC onboarding, commission tracking (Pending→Confirmed→Paid).
-Stack: React.js, Node.js, MongoDB, Ant Design, AWS S3
-
-XOTO.ae (Corporate Website)
-• Full UI/UX design & development for UAE real‑estate brand.
+XOTO.ae (UAE Real-Estate Platform) — https://xoto.ae/
+• Full UI/UX design & development for UAE real‑estate brand, responsive & stakeholder approved.
+  ↳ XOTO Grid — 7 role-specific dashboards, lead management, real-time updates.
+     Stack: React.js, Node.js, MongoDB, Redux, Socket.io, AWS S3, Express.js
+  ↳ XOTO Vault — KYC onboarding, commission tracking (Pending→Confirmed→Paid).
+     Stack: React.js, Node.js, MongoDB, Ant Design, AWS S3
 Stack: React.js, Tailwind CSS, JavaScript
 
 Taazi Bhaazi (Quick Commerce Platform)
@@ -400,7 +422,6 @@ function Navbar({ scrollProgress }) {
           <span className="bg-gradient-to-r from-violet-400 to-rose-400 bg-clip-text text-transparent">D</span>ivy<span className="text-rose-500">.</span>
         </div>
         
-        {/* Desktop Links */}
         <ul className="hidden md:flex items-center gap-8 list-none">
           {links.map((link) => (
             <li key={link}>
@@ -416,7 +437,6 @@ function Navbar({ scrollProgress }) {
           ))}
         </ul>
 
-        {/* Action Button */}
         <div className="hidden md:block">
           <a 
             href="mailto:divydadhich1234@gmail.com?subject=Let's%20work%20together" 
@@ -426,7 +446,6 @@ function Navbar({ scrollProgress }) {
           </a>
         </div>
 
-        {/* Mobile Toggle */}
         <button 
           onClick={() => setMenuOpen(!menuOpen)} 
           className="md:hidden flex items-center justify-center border border-slate-800 hover:border-violet-500/50 bg-slate-950/50 rounded-lg p-2 text-slate-300 transition-colors duration-200"
@@ -439,7 +458,6 @@ function Navbar({ scrollProgress }) {
         </button>
       </nav>
 
-      {/* Mobile Menu Panel */}
       {menuOpen && (
         <div className="fixed top-[72px] left-0 right-0 z-[80] md:hidden bg-slate-950/95 border-b border-slate-900 backdrop-blur-lg px-8 py-8 flex flex-col gap-5 shadow-2xl animate-fadeIn">
           {links.map((link) => (
@@ -497,18 +515,15 @@ function Hero() {
   return (
     <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-slate-950 pt-[72px] px-6 md:px-12">
       <ParticleBackground />
-      {/* Background patterns */}
       <div className="absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(rgba(139,92,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
       
       <div className="max-w-6xl mx-auto py-16 relative z-10 w-full">
         <div className="max-w-3xl">
-          {/* Status Badge */}
           <div className="inline-flex items-center gap-2.5 bg-violet-500/10 border border-violet-500/20 rounded-full px-4 py-1.5 mb-8 animate-fadeIn">
             <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
             <span className="text-[11px] text-violet-300 font-mono tracking-widest uppercase">Available for Full-time & Freelance</span>
           </div>
 
-          {/* Heading */}
           <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight leading-[0.9] text-white mb-6">
             Divy<br />
             <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-rose-400 bg-clip-text text-transparent">
@@ -516,7 +531,6 @@ function Hero() {
             </span>
           </h1>
 
-          {/* Subheading typewriter */}
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-violet-500 rounded" />
             <span className="text-xl md:text-2xl text-slate-400 font-light tracking-wide">
@@ -525,12 +539,10 @@ function Hero() {
             </span>
           </div>
 
-          {/* Bio Description */}
           <p className="text-base md:text-lg text-slate-400 leading-relaxed max-w-xl mb-10 font-light">
             I engineer production-grade MERN platforms — from custom real-estate marketplaces to high-trust partner portals. I write clean, robust code that scales, builds user trust, and solves complex business problems.
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 mb-8">
             <button 
               onClick={() => {
@@ -551,7 +563,6 @@ function Hero() {
             </button>
           </div>
 
-          {/* Interaction shortcuts */}
           <div className="flex flex-wrap gap-3 mb-12">
             <button 
               onClick={handleCopyInfo} 
@@ -567,7 +578,6 @@ function Hero() {
             </button>
           </div>
 
-          {/* Quick Metrics */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 border-t border-slate-900 pt-10">
             {[
               ["1+", "Years Exp."], 
@@ -583,7 +593,6 @@ function Hero() {
           </div>
         </div>
 
-        {/* Scroll down indicator */}
         <div className="absolute bottom-0 right-0 hidden sm:flex flex-col items-center gap-2.5 animate-fadeIn">
           <span className="text-[9px] text-slate-600 tracking-[0.25em] uppercase font-mono [writing-mode:vertical-rl]">Scroll down</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-violet-500 to-transparent" />
@@ -617,25 +626,20 @@ function About() {
   return (
     <section id="about" className="py-24 px-6 md:px-12 bg-slate-950 relative">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        {/* Visual Mockup */}
         <div ref={ref} className="relative">
-          {/* Card Mockup */}
           <div className="w-full aspect-[4/5] bg-slate-900/40 border border-slate-800 rounded-3xl flex flex-col relative overflow-hidden shadow-2xl backdrop-blur-sm">
-            {/* Header circles */}
             <div className="flex gap-1.5 p-5 border-b border-slate-900/60">
               <span className="w-2.5 h-2.5 rounded-full bg-slate-800" />
               <span className="w-2.5 h-2.5 rounded-full bg-slate-800" />
               <span className="w-2.5 h-2.5 rounded-full bg-slate-800" />
             </div>
             
-            {/* Code syntax */}
             <div className="flex-1 p-8 font-mono text-[11px] leading-relaxed text-slate-500 select-none overflow-hidden">
               {["const Divy = {", '  role: "Full Stack Dev",', '  stack: ["MERN"],', '  location: "Jaipur, IN",', '  status: "Available",', '  experience: "1+ yrs",', "};", "", "export default Divy;"].map((line, i) => (
                 <div key={i} className={i === 0 || i === 6 || i === 8 ? "text-violet-400/80" : "pl-4 text-slate-500"}>{line}</div>
               ))}
             </div>
 
-            {/* Profile Overlay */}
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/70 backdrop-blur-[1px] p-6">
               <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-violet-500/20 to-rose-500/20 border-2 border-violet-500/30 flex items-center justify-center mb-4 relative">
                 <div className="absolute inset-1.5 rounded-full bg-slate-950 flex items-center justify-center">
@@ -646,7 +650,6 @@ function About() {
               <p className="text-xs text-slate-400 font-mono mt-1">Full Stack Developer</p>
             </div>
 
-            {/* Floating Tags */}
             <div className="absolute top-8 right-6 bg-slate-900 border border-slate-800/80 rounded-xl px-4 py-2 text-[11px] text-violet-400 font-display font-extrabold shadow-lg">
               🟢 Open to Work
             </div>
@@ -655,14 +658,12 @@ function About() {
             </div>
           </div>
 
-          {/* Metrics Float */}
           <div className="absolute -bottom-6 -right-4 bg-slate-900 border border-violet-500/10 rounded-2xl p-5 text-center shadow-2xl min-w-[120px]">
             <div className="font-display font-black text-3xl text-violet-400 leading-none">{projectCount}+</div>
             <div className="text-[9px] text-slate-500 tracking-wider font-mono uppercase mt-1">Projects</div>
           </div>
         </div>
 
-        {/* Text Area */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
@@ -678,7 +679,6 @@ function About() {
             I take end-to-end responsibility — translating user goals into secure database logic, writing responsive components, and releasing updates into staging/production.
           </p>
 
-          {/* Quick specs grid */}
           <div className="grid grid-cols-2 gap-4 mb-8">
             {[
               { label: "Education", val: "B.Tech CS, Sobhasaria, 2025" }, 
@@ -693,7 +693,6 @@ function About() {
             ))}
           </div>
 
-          {/* Badges */}
           <div className="flex items-center flex-wrap gap-3">
             {[
               ["GitHub", "https://github.com/divydadhich"], 
@@ -731,7 +730,6 @@ function Skills() {
           <span className="text-xs text-emerald-400 font-mono tracking-widest uppercase">Technical Skills</span>
         </div>
         
-        {/* Header content and switcher */}
         <div className="flex justify-between items-end flex-wrap gap-6 mb-12">
           <h2 className="font-display font-black text-4xl md:text-5xl tracking-tight text-white">
             My Tech <span className="text-emerald-400">Arsenal</span>
@@ -754,7 +752,6 @@ function Skills() {
           </div>
         </div>
 
-        {/* Skill grid cards */}
         <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredSkills.map((skill, idx) => (
             <div 
@@ -800,9 +797,7 @@ function Experience() {
           Where I've <span className="text-emerald-400">Worked</span>
         </h2>
         
-        {/* Layout switcher */}
         <div className="grid md:grid-cols-[260px_1fr] gap-8">
-          {/* Timeline switch selectors */}
           <div className="timeline-node relative flex flex-col gap-2">
             {EXPERIENCE.map((exp, i) => (
               <button 
@@ -814,7 +809,6 @@ function Experience() {
                     : "border-transparent text-slate-500 hover:text-slate-300"
                 }`}
               >
-                {/* Dot */}
                 <div className={`absolute left-4 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${
                   active === i 
                     ? "bg-emerald-400 border-emerald-400" 
@@ -826,7 +820,6 @@ function Experience() {
             ))}
           </div>
 
-          {/* Experience detailed output panel */}
           <div className="bg-slate-900/30 border border-slate-900 rounded-2xl p-8 md:p-10 backdrop-blur-sm">
             <div className="flex items-start justify-between flex-wrap gap-4 mb-6">
               <div>
@@ -841,7 +834,6 @@ function Experience() {
             
             <div className="w-full h-[1px] bg-slate-900 mb-6" />
             
-            {/* Bullets */}
             <ul className="flex flex-col gap-4 list-none pl-0">
               {EXPERIENCE[active].bullets.map((b, i) => (
                 <li key={i} className="flex gap-4 text-slate-400 text-[13.5px] leading-relaxed font-light">
@@ -861,9 +853,6 @@ function Experience() {
 
 /* ─── PROJECTS ─── */
 function Projects() {
-  const featured = PROJECTS.filter((p) => p.featured);
-  const rest = PROJECTS.filter((p) => !p.featured);
-  
   return (
     <section id="projects" className="py-24 px-6 md:px-12 bg-slate-950">
       <div className="max-w-6xl mx-auto">
@@ -880,51 +869,156 @@ function Projects() {
           </p>
         </div>
 
-        {/* Featured Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {featured.map((proj, i) => (
-            <div 
-              key={proj.name} 
-              className="bg-slate-900/30 border border-slate-900 hover:border-emerald-500/20 rounded-3xl p-8 transition-all duration-300 relative overflow-hidden group shadow-xl"
-            >
-              {/* Radial gradient ambient background */}
-              <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-emerald-500/[0.02] group-hover:bg-emerald-500/[0.05] pointer-events-none rounded-full blur-[50px] transition-all duration-300" />
-              
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                </div>
-                <span className="text-[10px] text-slate-700 font-mono">0{i + 1}</span>
+        {/* ── XOTO.ae — main featured platform card ── */}
+        <div className="bg-slate-900/30 border border-slate-800 hover:border-emerald-500/30 rounded-3xl p-8 md:p-10 mb-8 transition-all duration-300 relative overflow-hidden group shadow-xl">
+          {/* Ambient glow */}
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-emerald-500/[0.03] group-hover:bg-emerald-500/[0.06] pointer-events-none rounded-full blur-[60px] transition-all duration-500" />
+
+          {/* Header row */}
+          <div className="flex items-start justify-between flex-wrap gap-4 mb-6 relative z-10">
+            <div className="flex items-center gap-4">
+              {/* Platform icon */}
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.8">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+                </svg>
               </div>
+              <div>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h3 className="font-display font-black text-2xl text-white group-hover:text-emerald-400 transition-colors duration-200">
+                    XOTO.ae
+                  </h3>
+                  <span className="text-[9px] font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full uppercase tracking-widest">
+                    Live Platform
+                  </span>
+                </div>
+                <div className="text-[10px] text-emerald-400/70 font-mono tracking-widest uppercase mt-0.5">UAE Real-Estate Platform</div>
+              </div>
+            </div>
+
+            {/* Live link */}
+            <a
+              href="https://xoto.ae/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 font-display font-bold text-xs uppercase px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 whitespace-nowrap"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Visit Site →
+            </a>
+          </div>
+
+          {/* Description */}
+          <p className="text-slate-400 text-sm font-light leading-relaxed mb-6 max-w-2xl relative z-10">
+            Full UI/UX design and development for an official UAE real-estate brand — responsive, brand-aligned, and refined through multiple stakeholder feedback cycles. The platform ships as three interconnected products.
+          </p>
+
+          {/* Stack tags */}
+          <div className="flex flex-wrap gap-1.5 mb-8 relative z-10">
+            {["React.js", "Tailwind CSS", "JavaScript"].map((s) => (
+              <span key={s} className="text-[9px] font-mono bg-slate-900 border border-slate-800 text-slate-500 px-2 py-0.5 rounded">
+                {s}
+              </span>
+            ))}
+          </div>
+
+          {/* Divider with label */}
+          <div className="flex items-center gap-3 mb-6 relative z-10">
+            <div className="h-[1px] w-5 bg-slate-800" />
+            <span className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">Platform Modules</span>
+            <div className="h-[1px] flex-1 bg-slate-800/60" />
+          </div>
+
+          {/* Sub-modules: Grid + Vault */}
+          <div className="grid md:grid-cols-2 gap-4 relative z-10">
+            {/* XOTO Grid */}
+            <div className="bg-slate-950/60 border border-slate-800/80 hover:border-emerald-500/25 rounded-2xl p-6 transition-all duration-300 group/mod relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-[120px] h-[120px] bg-emerald-500/[0.02] group-hover/mod:bg-emerald-500/[0.05] pointer-events-none rounded-full blur-[40px] transition-all duration-300" />
               
-              <h3 className="font-display font-black text-xl text-white mb-1 group-hover:text-emerald-400 transition-colors duration-200">{proj.name}</h3>
-              <div className="text-[10px] text-emerald-400 font-mono tracking-widest uppercase mb-4">{proj.tagline}</div>
-              <p className="text-slate-400 text-xs md:text-sm font-light leading-relaxed mb-6 truncate-3-lines">{proj.description}</p>
-              
+              {/* Module header */}
+              <div className="flex items-center gap-3 mb-4">
+                {/* Left accent bar */}
+                <div className="w-1 h-8 rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600 flex-shrink-0" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-display font-extrabold text-[15px] text-white group-hover/mod:text-emerald-400 transition-colors duration-200">
+                      XOTO Grid
+                    </h4>
+                    <span className="text-[8px] font-mono text-slate-600 border border-slate-800 px-1.5 py-0.5 rounded">module</span>
+                  </div>
+                  <div className="text-[9px] text-emerald-400/70 font-mono tracking-wider uppercase mt-0.5">Real-Estate Marketplace</div>
+                </div>
+              </div>
+
+              <p className="text-slate-400 text-[12px] font-light leading-relaxed mb-4">
+                7 role-specific dashboards, intelligent lead management with auto-classification, deduplication, and performance-based advisor assignment.
+              </p>
+
               {/* Metrics */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {proj.metrics.map((m) => (
-                  <span key={m} className="text-[9px] font-mono bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/80 px-2.5 py-1 rounded-full">
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {["7 User Roles", "Live Clients", "Real-time Updates"].map((m) => (
+                  <span key={m} className="text-[8px] font-mono bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/80 px-2 py-0.5 rounded-full">
                     {m}
                   </span>
                 ))}
               </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5">
-                {proj.stack.map((s) => (
-                  <span key={s} className="text-[9px] font-mono bg-slate-900 border border-slate-800 text-slate-500 px-2 py-0.5 rounded">
+              {/* Stack */}
+              <div className="flex flex-wrap gap-1">
+                {["React.js", "Node.js", "MongoDB", "Redux", "Socket.io", "AWS S3", "Express.js"].map((s) => (
+                  <span key={s} className="text-[8px] font-mono bg-slate-900 border border-slate-800/60 text-slate-600 px-1.5 py-0.5 rounded">
                     {s}
                   </span>
                 ))}
               </div>
             </div>
-          ))}
+
+            {/* XOTO Vault */}
+            <div className="bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/25 rounded-2xl p-6 transition-all duration-300 group/mod2 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-[120px] h-[120px] bg-cyan-500/[0.02] group-hover/mod2:bg-cyan-500/[0.05] pointer-events-none rounded-full blur-[40px] transition-all duration-300" />
+              
+              {/* Module header */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-1 h-8 rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 flex-shrink-0" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-display font-extrabold text-[15px] text-white group-hover/mod2:text-cyan-400 transition-colors duration-200">
+                      XOTO Vault
+                    </h4>
+                    <span className="text-[8px] font-mono text-slate-600 border border-slate-800 px-1.5 py-0.5 rounded">module</span>
+                  </div>
+                  <div className="text-[9px] text-cyan-400/70 font-mono tracking-wider uppercase mt-0.5">Partner Ecosystem Platform</div>
+                </div>
+              </div>
+
+              <p className="text-slate-400 text-[12px] font-light leading-relaxed mb-4">
+                Multi-step partner onboarding with KYC (Emirates ID, Passport, Trade License), structured lead pipelines, and commission tracking with Pending→Confirmed→Paid flow.
+              </p>
+
+              {/* Metrics */}
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {["KYC Workflows", "Commission Engine", "Deal Verification"].map((m) => (
+                  <span key={m} className="text-[8px] font-mono bg-cyan-500/5 border border-cyan-500/10 text-cyan-400/80 px-2 py-0.5 rounded-full">
+                    {m}
+                  </span>
+                ))}
+              </div>
+
+              {/* Stack */}
+              <div className="flex flex-wrap gap-1">
+                {["React.js", "Node.js", "MongoDB", "Ant Design", "AWS S3"].map((s) => (
+                  <span key={s} className="text-[8px] font-mono bg-slate-900 border border-slate-800/60 text-slate-600 px-1.5 py-0.5 rounded">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Smaller Projects Grid */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {rest.map((proj, i) => (
+        {/* ── Other Projects ── */}
+        <div className="grid sm:grid-cols-2 gap-5">
+          {OTHER_PROJECTS.map((proj, i) => (
             <div 
               key={proj.name} 
               className="bg-slate-900/30 border border-slate-900 hover:border-emerald-500/20 rounded-2xl p-6 transition-all duration-300 relative overflow-hidden group shadow-lg"
@@ -934,15 +1028,23 @@ function Projects() {
                 <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
                 </div>
-                <span className="text-[10px] text-slate-700 font-mono">0{i + 3}</span>
+                <span className="text-[10px] text-slate-700 font-mono">0{i + 2}</span>
               </div>
               
               <h3 className="font-display font-extrabold text-base text-white mb-0.5 group-hover:text-emerald-400 transition-colors duration-200">{proj.name}</h3>
               <div className="text-[9px] text-emerald-400/90 font-mono tracking-widest uppercase mb-3">{proj.tagline}</div>
-              <p className="text-slate-400 text-xs font-light leading-relaxed mb-5 min-h-[50px]">{proj.description}</p>
+              <p className="text-slate-400 text-xs font-light leading-relaxed mb-5">{proj.description}</p>
               
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {proj.metrics.map((m) => (
+                  <span key={m} className="text-[8px] font-mono bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/80 px-2 py-0.5 rounded-full">
+                    {m}
+                  </span>
+                ))}
+              </div>
+
               <div className="flex flex-wrap gap-1">
-                {proj.stack.slice(0, 4).map((s) => (
+                {proj.stack.map((s) => (
                   <span key={s} className="text-[8px] font-mono bg-slate-900 border border-slate-800 text-slate-500 px-2 py-0.5 rounded">
                     {s}
                   </span>
@@ -977,7 +1079,6 @@ function Services() {
           </p>
         </div>
 
-        {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {SERVICES.map((svc) => (
             <div 
@@ -993,7 +1094,6 @@ function Services() {
           ))}
         </div>
 
-        {/* Work callout banner */}
         <div className="bg-gradient-to-r from-emerald-500/10 via-slate-900 to-slate-900 border border-emerald-500/10 rounded-3xl p-10 md:p-12 flex items-center justify-between flex-wrap gap-8 shadow-xl">
           <div>
             <h3 className="font-display font-extrabold text-2xl text-white mb-2">Ready to pitch a prototype?</h3>
@@ -1048,7 +1148,6 @@ function Contact() {
         </div>
 
         <div className="grid md:grid-cols-[1fr_1.3fr] gap-10">
-          {/* Quick info column */}
           <div className="flex flex-col gap-4">
             {[
               { label: "Email", val: "divydadhich1234@gmail.com", href: "mailto:divydadhich1234@gmail.com", iconPath: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
@@ -1073,7 +1172,6 @@ function Contact() {
               </div>
             ))}
             
-            {/* Social connection cards */}
             <div className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6">
               <div className="text-[9px] text-slate-500 font-mono tracking-wider uppercase mb-4">Find me on</div>
               <div className="flex items-center gap-2.5">
@@ -1096,7 +1194,6 @@ function Contact() {
             </div>
           </div>
 
-          {/* Form container */}
           <div className="bg-slate-900/10 border border-slate-900 rounded-3xl p-8 md:p-10 shadow-xl backdrop-blur-sm">
             {sent ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -1171,7 +1268,7 @@ function Contact() {
 
                 <button 
                   type="submit" 
-                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-black text-sm uppercase px-6 py-4.5 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 flex items-center justify-center gap-2 mt-2"
+                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-black text-sm uppercase px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 flex items-center justify-center gap-2 mt-2"
                 >
                   Send Message 
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" /></svg>
@@ -1210,7 +1307,6 @@ export default function App() {
   const progress = useScrollProgress();
   return (
     <div className="relative min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden selection:bg-emerald-500/20 selection:text-emerald-400">
-      {/* Ambient background glows */}
       <div className="absolute top-[10%] right-[10%] w-[380px] h-[380px] bg-emerald-500/[0.04] rounded-full blur-[110px] pointer-events-none animate-pulse-slow z-0" />
       <div className="absolute top-[40%] left-[5%] w-[480px] h-[480px] bg-blue-600/[0.03] rounded-full blur-[130px] pointer-events-none animate-float-slow z-0" />
       <div className="absolute bottom-[10%] right-[5%] w-[380px] h-[380px] bg-indigo-500/[0.04] rounded-full blur-[110px] pointer-events-none z-0" />
