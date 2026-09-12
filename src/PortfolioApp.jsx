@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo} from "react";
+import * as THREE from "three";
+import CommandPalette from "./CommandPalette";
+import emailjs from "@emailjs/browser";
 import {
   PROFILE,
   BOOT_LINES,
@@ -11,6 +14,10 @@ import {
   EDUCATION,
   CERTIFICATIONS,
 } from "./data";
+
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
 /* ----------------------------------------------------------------------- */
 /*  Theme: "Live Systems Console" — dark engineering-console aesthetic     */
@@ -41,6 +48,20 @@ const GlobalStyles = () => (
       --term-text: #e7ecf3;
       --term-muted: #8291a3;
     }
+
+    [data-theme="dark"] {
+  --bg: #0b1220;
+  --panel: #101a2c;
+  --panel-hi: #16233b;
+  --border: #223046;
+  --border-hi: #2e3f5c;
+  --text: #e7ecf3;
+  --muted: #8291a3;
+  --emerald: #34d399;
+  --amber: #d99128;
+  --blue: #3b82f6;
+}
+[data-theme="dark"] .console-root { background: var(--bg); }
 
     .console-root {
       background: var(--bg);
@@ -289,57 +310,100 @@ function CustomCursor() {
 /* ------------------------------ background fx ---------------------------- */
 
 function AmbientField() {
-  const canvasRef = useRef(null);
+  const mountRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const mount = mountRef.current;
+    if (!mount) return;
 
-    const nodes = Array.from({ length: 46 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.6 + 0.6,
-    }));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, mount.clientWidth / mount.clientHeight, 0.1, 1000);
+    camera.position.z = 60;
 
-    const resize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
-    window.addEventListener("resize", resize);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(mount.clientWidth, mount.clientHeight);
+    mount.appendChild(renderer.domElement);
 
+    const COUNT = 500;
+    const positions = new Float32Array(COUNT * 3);
+    for (let i = 0; i < COUNT; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 140;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 90;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 60;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+    const mat = new THREE.PointsMaterial({ color: 0x2563eb, size: 0.6, transparent: true, opacity: 0.55 });
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+
+    // faint connecting lines (nearest-neighbor, recomputed lightly)
+    const lineGeo = new THREE.BufferGeometry();
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x0e9f6e, transparent: true, opacity: 0.12 });
+    const lines = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(lines);
+
+    const mouse = { x: 0, y: 0 };
+    const onMouseMove = (e) => {
+      mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener("mousemove", onMouseMove);
+
+    let frame = 0;
     let raf;
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-      nodes.forEach((n, i) => {
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < 0 || n.x > width) n.vx *= -1;
-        if (n.y < 0 || n.y > height) n.vy *= -1;
-        for (let j = i + 1; j < nodes.length; j++) {
-          const other = nodes[j];
-          const dx = n.x - other.x, dy = n.y - other.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < 130) {
-            ctx.strokeStyle = `rgba(14, 159, 110, ${0.14 * (1 - dist / 130)})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(other.x, other.y); ctx.stroke();
+    const animate = () => {
+      frame++;
+      points.rotation.y += 0.0008;
+      points.rotation.x += 0.0002;
+
+      camera.position.x += (mouse.x * 8 - camera.position.x) * 0.02;
+      camera.position.y += (-mouse.y * 8 - camera.position.y) * 0.02;
+      camera.lookAt(scene.position);
+
+      // rebuild line segments every 6 frames (cheap perf trade-off)
+      if (frame % 6 === 0) {
+        const segs = [];
+        const pos = geo.attributes.position.array;
+        for (let i = 0; i < COUNT; i += 4) {
+          for (let j = i + 1; j < Math.min(i + 20, COUNT); j++) {
+            const dx = pos[i * 3] - pos[j * 3];
+            const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
+            const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
+            if (dx * dx + dy * dy + dz * dz < 100) {
+              segs.push(pos[i*3], pos[i*3+1], pos[i*3+2], pos[j*3], pos[j*3+1], pos[j*3+2]);
+            }
           }
         }
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(37, 99, 235, 0.4)";
-        ctx.fill();
-      });
-      raf = requestAnimationFrame(draw);
+        lineGeo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(segs), 3));
+      }
+
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(animate);
     };
-    raf = requestAnimationFrame(draw);
-    return () => { window.removeEventListener("resize", resize); cancelAnimationFrame(raf); };
+    animate();
+
+    const onResize = () => {
+      camera.aspect = mount.clientWidth / mount.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(mount.clientWidth, mount.clientHeight);
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", onResize);
+      mount.removeChild(renderer.domElement);
+      geo.dispose(); mat.dispose(); lineGeo.dispose(); lineMat.dispose(); renderer.dispose();
+    };
   }, []);
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
+      <div ref={mountRef} className="absolute inset-0" />
       <div className="grid-field" />
       <div className="scanline" />
     </div>
@@ -348,7 +412,7 @@ function AmbientField() {
 
 /* --------------------------------- navbar -------------------------------- */
 
-function Navbar({ progress }) {
+function Navbar({ progress, theme, setTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const links = ["Home", "About", "Skills", "Experience", "Projects", "Contact"];
@@ -387,6 +451,7 @@ function Navbar({ progress }) {
               <button key={l} onClick={() => scrollTo(l)} className="nav-link hover:text-[var(--text)] transition-colors">{l}</button>
             ))}
           </nav>
+          <ThemeToggle theme={theme} setTheme={setTheme} />
           <a href={`mailto:${PROFILE.email}`} className="hidden md:inline-flex btn-primary rounded-md px-4 py-2 text-xs font-mono">
             get_in_touch()
           </a>
@@ -403,6 +468,32 @@ function Navbar({ progress }) {
         )}
       </header>
     </>
+  );
+}
+function useTheme() {
+  const [theme, setTheme] = useState(() => {
+    const saved = typeof window !== "undefined" && window.__theme;
+    return saved || "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    window.__theme = theme; // in-memory only, no localStorage in artifacts
+  }, [theme]);
+
+  return [theme, setTheme];
+}
+
+function ThemeToggle({ theme, setTheme }) {
+  return (
+    <button
+      onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))}
+      data-cursor-hover
+      className="flex h-8 w-8 items-center justify-center rounded-md border border-[var(--border)] text-[var(--text)] transition hover:border-[var(--emerald)]"
+      aria-label="Toggle theme"
+    >
+      <span className="font-mono text-xs">{theme === "light" ? "☾" : "☀"}</span>
+    </button>
   );
 }
 
@@ -739,6 +830,64 @@ function StatCell({ stat, inView }) {
     </div>
   );
 }
+function useGithubStats(username) {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`https://api.github.com/users/${username}`)
+      .then((r) => r.json())
+      .then((d) => { if (!cancelled) setData(d); })
+      .catch(() => { if (!cancelled) setError(true); });
+    return () => { cancelled = true; };
+  }, [username]);
+
+  return { data, error };
+}
+
+function GithubLiveCard() {
+  const { data, error } = useGithubStats("divydadhich");
+
+  return (
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--panel)] p-6">
+      <div className="flex items-center justify-between">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--muted)]">github // live</p>
+        <span className="flex items-center gap-2 font-mono text-[11px] text-[var(--emerald)]">
+          <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-[var(--emerald)] text-[var(--emerald)]" />
+          synced
+        </span>
+      </div>
+
+      {error && <p className="mt-4 font-mono text-xs text-[var(--muted)]">could not reach github api</p>}
+
+      {!data && !error && (
+        <p className="mt-4 font-mono text-xs text-[var(--muted)]">fetching...</p>
+      )}
+
+      {data && (
+        <div className="mt-5 flex items-center gap-4">
+          <img src={data.avatar_url} alt={data.login} className="h-14 w-14 rounded-full border border-[var(--border)]" />
+          <div className="grid flex-1 grid-cols-3 gap-3">
+            <div>
+              <p className="font-display text-xl font-semibold text-[var(--text)]">{data.public_repos}</p>
+              <p className="text-[11px] text-[var(--muted)]">repos</p>
+            </div>
+            <div>
+              <p className="font-display text-xl font-semibold text-[var(--text)]">{data.followers}</p>
+              <p className="text-[11px] text-[var(--muted)]">followers</p>
+            </div>
+            <div>
+              <p className="font-display text-xl font-semibold text-[var(--text)]">{data.public_gists}</p>
+              <p className="text-[11px] text-[var(--muted)]">gists</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 function Headline({ text }) {
   const words = text.split(" ");
@@ -792,6 +941,9 @@ function Hero() {
             <div className="mt-8">
               <StatusPanel />
             </div>
+            <div className="mt-6">
+    <GithubLiveCard />
+  </div>
           </div>
         </div>
       </div>
@@ -1205,18 +1357,29 @@ function MagneticButton({ children, ...props }) {
 
 function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
   const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
-    const mailto = `mailto:${PROFILE.email}?subject=${encodeURIComponent("Portfolio inquiry from " + form.name)}&body=${encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`)}`;
-    window.open(mailto, "_blank");
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSent(false), 4500);
+    setStatus("sending");
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        { from_name: form.name, from_email: form.email, message: form.message },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus("idle"), 4500);
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4500);
+    }
   };
 
   return (
@@ -1239,11 +1402,11 @@ function Contact() {
 
           <Reveal>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-8">
-              {sent ? (
+              {status === "sent" ? (
                 <div className="flex flex-col items-center justify-center gap-4 py-10 text-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--emerald)]/15 text-2xl text-[var(--emerald)]">✓</span>
-                  <p className="font-display text-xl font-semibold text-[var(--text)]">Message queued.</p>
-                  <p className="font-mono text-xs text-[var(--muted)]">status: sent — expect a reply within 24h</p>
+                  <p className="font-display text-xl font-semibold text-[var(--text)]">Message sent.</p>
+                  <p className="font-mono text-xs text-[var(--muted)]">status: delivered — expect a reply within 24h</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -1265,9 +1428,13 @@ function Contact() {
                       className="mt-2 w-full rounded-md border border-[var(--border)] bg-[var(--panel-hi)] px-4 py-3 text-sm text-[var(--text)] outline-none transition focus:border-[var(--emerald)]"
                       placeholder="What are you building?" />
                   </div>
-                  <MagneticButton type="submit" data-cursor-hover className="btn-primary w-full rounded-md py-3 font-mono text-sm">
-                    send_message()
+                  <MagneticButton type="submit" disabled={status === "sending"} data-cursor-hover
+                    className="btn-primary w-full rounded-md py-3 font-mono text-sm disabled:opacity-60">
+                    {status === "sending" ? "sending..." : "send_message()"}
                   </MagneticButton>
+                  {status === "error" && (
+                    <p className="font-mono text-xs text-[#ef5a5a]">Send failed — try again or email directly.</p>
+                  )}
                 </form>
               )}
             </div>
@@ -1293,12 +1460,14 @@ function Footer() {
 
 export default function App() {
   const progress = useScrollProgress();
+  const [theme, setTheme] = useTheme();
 
   return (
     <div className="console-root relative min-h-screen overflow-x-hidden">
       <GlobalStyles />
       <CustomCursor />
-      <Navbar progress={progress} />
+      <CommandPalette />
+      <Navbar progress={progress} theme={theme} setTheme={setTheme} />
       <main className="relative z-10">
         <Hero />
         <ToolMarquee />
