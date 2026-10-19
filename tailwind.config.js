@@ -1,22 +1,38 @@
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Inter"', 'sans-serif'],
-        display: ['"Plus Jakarta Sans"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
-      },
-      boxShadow: {
-        glow: '0 30px 80px rgba(139, 92, 246, 0.15)',
-        'violet-glow': '0 30px 80px rgba(139, 92, 246, 0.2)',
-        'rose-glow': '0 30px 80px rgba(244, 63, 94, 0.15)',
-        'blue-glow': '0 20px 50px rgba(6, 182, 212, 0.15)',
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Space Grotesk', 'Plus Jakarta Sans', 'sans-serif'],
+        heading: ['Plus Jakarta Sans', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
-        surface: '#0b1120',
+        cyber: {
+          dark: '#030712',
+          card: '#0b1220',
+          elevated: '#111c30',
+          border: '#1e293b',
+          cyan: '#06b6d4',
+          emerald: '#10b981',
+          violet: '#8b5cf6',
+          amber: '#f59e0b',
+        },
+      },
+      animation: {
+        'spin-slow': 'spin 12s linear infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      boxShadow: {
+        neon: '0 0 20px rgba(6, 182, 212, 0.4)',
+        'neon-violet': '0 0 20px rgba(139, 92, 246, 0.4)',
+        'neon-emerald': '0 0 20px rgba(16, 185, 129, 0.4)',
+        glass: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
       },
     },
   },
   plugins: [],
-}
+};
